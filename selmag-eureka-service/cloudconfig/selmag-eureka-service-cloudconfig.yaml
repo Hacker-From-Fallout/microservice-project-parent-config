@@ -1,0 +1,36 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            user-name-attribute: preferred_username
+            issuer-uri: http://192.168.109.247:8082/realms/selmag
+        registration:
+          keycloak:
+            client-id: eureka-server
+            client-secret: OUNck4mEY6c1aGXuBJem0CrmXaXe8ytd
+            scope:
+              - openid   
+              - microprofile-jwt    
+      resourceserver:
+        jwt:
+          issuer-uri: http://192.168.109.247:8082/realms/selmag
+management:
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
